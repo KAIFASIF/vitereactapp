@@ -10,7 +10,23 @@ pipeline {
             }
         }
 
-        // Stage 2: Build Docker image
+        // Stage 2: Delete all existing containers
+        stage('delete_containers') {
+            steps {
+                // Delete all Docker containers
+                sh 'docker rm -f $(docker ps -a -q) || true'
+            }
+        }
+
+        // Stage 3: Delete all existing images
+        stage('delete_images') {
+            steps {
+                // Delete all Docker images
+                sh 'docker rmi -f $(docker images -q) || true'
+            }
+        }
+
+        // Stage 4: Build Docker image
         stage('build') {
             steps {
                 // Print information about the build environment
@@ -22,7 +38,7 @@ pipeline {
             }
         }
 
-        // Stage 3: Kill process on port 3000 and run Docker container
+        // Stage 5: Kill process on port 3000 and run Docker container
         stage('run') {
             steps {
                 // Print Docker version for debugging
