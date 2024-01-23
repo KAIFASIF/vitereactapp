@@ -6,7 +6,7 @@ function App() {
        Testing my first app on aws ec2 using github docker and jenkins pipeline and addeded new content
       </p>
       <p>
-        Click on the Vite and React logos to learn more
+        Click on the Vite and ddddddddddddddddddddddddReact logos to learn more
       </p>
     </>
   );
