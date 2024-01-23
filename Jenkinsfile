@@ -12,19 +12,17 @@ pipeline {
 
         // Stage 2: Build Docker image
         stage('build') {
-    steps {
-        // Print information about the build environment
-        sh 'uname -a'
-        sh 'df -h'
+            steps {
+                // Print information about the build environment
+                sh 'uname -a'
+                sh 'df -h'
 
-        // Build Docker image with the tag 'vitedockerreact'
-        sh 'docker build -t vitedockerreact .'
-    }
-}
+                // Build Docker image with the tag 'vitedockerreact'
+                sh 'docker build -t vitedockerreact .'
+            }
+        }
 
-// ...
-
-        // Stage 3: Run Docker container on port 3000
+        // Stage 3: Kill process on port 3000 and run Docker container
         stage('run') {
             steps {
                 // Print Docker version for debugging
@@ -32,6 +30,9 @@ pipeline {
 
                 // Print the images available on the host for debugging
                 sh 'docker images'
+
+                // Kill the process using port 3000
+                sh 'fuser -k 3000/tcp || true'
 
                 // Run Docker container with port mapping (host:container)
                 sh 'docker run -p 3000:80 -d vitedockerreact'
