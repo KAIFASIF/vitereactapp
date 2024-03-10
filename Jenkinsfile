@@ -34,7 +34,7 @@ pipeline {
                 sh 'df -h'
 
                 // Build Docker image with the tag 'vitedockerreact'
-                sh 'docker build -t vitedockerreact .'
+                sh 'docker build -t vite-docker-app .'
             }
         }
 
@@ -51,7 +51,7 @@ pipeline {
                 sh 'fuser -k 3000/tcp || true'
 
                 // Run Docker container with port mapping (host:container)
-                sh 'docker run -p 3000:80 -d vitedockerreact'
+                sh 'docker run -d -p 3000:80 --name react-container vite-docker-app'
 
                 // Sleep for a short duration to allow the container to start
                 sh 'sleep 10'
